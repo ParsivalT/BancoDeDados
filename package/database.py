@@ -92,6 +92,10 @@ class dataBase:
             print("Erro! Dados inseridos vazios ou formato de data inválido!")
             return False
 
+        # TODO: Cadastrar o funcionario no Banco.
+
+    # TODO: Atualizar os dados de um funcionario existente
+    # TODO: Deletar um funcionario existente.
     @property
     def fechar_conexao(self):
         """
