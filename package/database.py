@@ -34,7 +34,7 @@ class dataBase:
             # Se ocorrer um erro durante a conexão, imprime uma mensagem de erro.
             print(f"Não foi possível se conectar ao banco: {e}")
 
-    @property
+
     def criar_tabela(self):
         """
         Cria a tabela 'Funcionarios' no banco de dados, se ela não existir.
@@ -76,9 +76,11 @@ class dataBase:
         except ValueError:
             return False
 
-    def inserir_valor(self, nome:str, data:str, cargo:str):
+    import datetime
+
+    def inserir_valor(self, nome: str, data: str, cargo: str):
         """
-        Insere valores na tabela 'Funcionarios' do banco de dados.
+        Insere valores na tabela 'Funcionários' do banco de dados.
 
         Parameters:
             nome (str): Nome do funcionário.
@@ -88,15 +90,38 @@ class dataBase:
         Returns:
             bool: True se a inserção for bem-sucedida, False em caso de erro.
         """
-        if nome == '' or data == '' or cargo == '' or not self.verifica_data_nascimento(data):
-            print("Erro! Dados inseridos vazios ou formato de data inválido!")
+        # Verifica se os campos obrigatórios estão vazios
+        if nome == '' or data == '' or cargo == '':
+            print("Erro! Dados inseridos vazios!")
             return False
 
-        # TODO: Cadastrar o funcionario no Banco.
+        # Verifica o formato da data de nascimento
+        if not self.verifica_data_nascimento(data):
+            print("Erro! Formato de data de nascimento inválido!")
+            return False
 
-    # TODO: Atualizar os dados de um funcionario existente
-    # TODO: Deletar um funcionario existente.
-    @property
+        # Verifica se a data de nascimento é uma data válida
+        try:
+            dia, mes, ano = map(int, data.split('-'))
+            datetime(ano, mes, dia)
+        except ValueError:
+            print("Erro! Data de nascimento inválida!")
+            return False
+
+        try:
+            self.cursor.execute("""
+                INSERT INTO Funcionarios (nome, dataNascimento, cargo)
+                VALUES (?, ?, ?)""", (nome, data, cargo))
+            self.conn.commit()
+            return True
+
+        except sqlite3.Error as e:
+            print(f"Falha ao inserir novos valores no banco: {e}")
+            return False
+
+
+
+
     def fechar_conexao(self):
         """
         Fecha a conexão com o banco de dados.
