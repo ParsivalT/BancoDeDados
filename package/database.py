@@ -1,26 +1,13 @@
 import sqlite3
 from datetime import datetime
 
-class dataBase:
+class Database:
     def __init__(self, dbpath: str):
         """
-        Inicializa uma instância da classe dataBase e estabelece uma conexão com o banco de dados.
+        Inicializa uma instância da classe Database e estabelece uma conexão com o banco de dados.
 
         Parameters:
             dbpath (str): O caminho para o arquivo do banco de dados SQLite.
-
-        Atributos:
-            online (bool): Indica se a conexão com o banco de dados foi estabelecida com sucesso.
-            conn (sqlite3.Connection): Representa a conexão com o banco de dados.
-            cursor (sqlite3.Cursor): Um objeto de cursor para executar consultas SQL no banco de dados.
-
-        Exemplo de uso:
-            db = dataBase("meu_banco_de_dados.db")
-            if db.online:
-                # A conexão foi estabelecida com sucesso, agora você pode executar consultas SQL.
-                db.criar_tabela()
-            else:
-                print("Não foi possível conectar ao banco de dados.")
         """
         self.online = False
 
@@ -34,23 +21,17 @@ class dataBase:
             # Se ocorrer um erro durante a conexão, imprime uma mensagem de erro.
             print(f"Não foi possível se conectar ao banco: {e}")
 
-
     def criar_tabela(self):
         """
         Cria a tabela 'Funcionarios' no banco de dados, se ela não existir.
-
-        Exemplo de uso:
-            db = dataBase("meu_banco_de_dados.db")
-            if db.online:
-                db.criar_tabela
         """
         try:
             self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS Funcionarios (
                     id INTEGER PRIMARY KEY,
-                    nome VARCHAR(60) NOT NULL,
+                    nome TEXT NOT NULL,
                     dataNascimento DATE NOT NULL,
-                    cargo VARCHAR(30) NOT NULL
+                    cargo TEXT NOT NULL
                 )''')
             self.conn.commit()
             print("Tabela 'Funcionarios' criada com sucesso.")
@@ -58,7 +39,8 @@ class dataBase:
         except sqlite3.Error as e:
             print(f"Não foi possível criar a tabela: {e}")
 
-    def verifica_data_nascimento(self, data:str):
+    @staticmethod
+    def _verifica_data_nascimento(data: str) -> bool:
         """
         Valida a Data de Nascimento inserida.
 
@@ -76,11 +58,9 @@ class dataBase:
         except ValueError:
             return False
 
-    import datetime
-
-    def inserir_valor(self, nome: str, data: str, cargo: str):
+    def inserir_valor(self, nome: str, data: str, cargo: str) -> int:
         """
-        Insere valores na tabela 'Funcionários' do banco de dados.
+        Insere valores na tabela 'Funcionários' do banco de dados e retorna o ID gerado.
 
         Parameters:
             nome (str): Nome do funcionário.
@@ -88,49 +68,74 @@ class dataBase:
             cargo (str): Cargo do funcionário.
 
         Returns:
-            bool: True se a inserção for bem-sucedida, False em caso de erro.
+            int: O ID gerado para o novo registro inserido, ou -1 em caso de erro.
         """
         # Verifica se os campos obrigatórios estão vazios
-        if nome == '' or data == '' or cargo == '':
+        if not nome or not data or not cargo:
             print("Erro! Dados inseridos vazios!")
-            return False
+            return -1
 
         # Verifica o formato da data de nascimento
-        if not self.verifica_data_nascimento(data):
+        if not self._verifica_data_nascimento(data):
             print("Erro! Formato de data de nascimento inválido!")
-            return False
+            return -1
 
         # Verifica se a data de nascimento é uma data válida
         try:
             dia, mes, ano = map(int, data.split('-'))
             datetime(ano, mes, dia)
+
         except ValueError:
             print("Erro! Data de nascimento inválida!")
-            return False
+            return -1
 
         try:
             self.cursor.execute("""
                 INSERT INTO Funcionarios (nome, dataNascimento, cargo)
                 VALUES (?, ?, ?)""", (nome, data, cargo))
             self.conn.commit()
-            return True
+
+            return self.cursor.lastrowid  # Retorna o ID gerado
 
         except sqlite3.Error as e:
             print(f"Falha ao inserir novos valores no banco: {e}")
-            return False
+            return -1
 
+    def atualizar_valor(self, id: int, coluna: str, valor: str):
+        """
+        Atualiza valores na tabela 'Funcionários' do banco de dados.
 
+        Parameters:
+            id (int): O ID do registro a ser atualizado.
+            coluna (str): O nome da coluna a ser atualizada.
+            valor (str): O novo valor a ser definido para a coluna.
+        """
+        try:
+            self.cursor.execute(f"""
+                UPDATE Funcionarios SET {coluna} = ? WHERE id = ?
+            """, (valor, id))
+            self.conn.commit()
 
+        except sqlite3.Error as e:
+            print(f"Houve um problema ao tentar atualizar o valor: {e}")
+
+    def mostrar_registro(self, id:int) -> tuple:
+        """
+        Recupera...
+
+        Returns:
+            list:.
+        """
+        try:
+            self.cursor.execute("""SELECT * FROM Funcionarios WHERE id = ?""", (id))
+            return self.cursor.fetchall()
+
+        except sqlite3.Error as e:
+            print(f"Erro ao acessar a base de dados: {e}")
 
     def fechar_conexao(self):
         """
         Fecha a conexão com o banco de dados.
-
-        Exemplo de uso:
-            db = dataBase("meu_banco_de_dados.db")
-            if db.online:
-                # Realize operações no banco de dados aqui
-                db.fechar_conexao
         """
         try:
             self.conn.close()
