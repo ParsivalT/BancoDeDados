@@ -34,11 +34,18 @@ def test_insert_values(memory_db):
 
 def test_update_values(memory_db):
     id = memory_db.inserir_valor(nome="Mario", data="31-11-2003", cargo="Analista")
+    
+    if id != -1:
+        memory_db.atualizar_valor(id, "nome", "Thiago")
+        memory_db.atualizar_valor(id, "dataNascimento", "24-02-2004")
+        memory_db.atualizar_valor(id, "cargo", "Operador")
 
-    if id: 
-        is
-
+        assert memory_db.mostrar_registro(id)[1] == "Thiago"
+        assert memory_db.mostrar_registro(id)[2] == "24-02-2004"
+        assert memory_db.mostrar_registro(id)[3] == "Operador"
+        
 # Teste para verificar o fechamento da conexão
+
 def test_close_connection(memory_db):
     memory_db.fechar_conexao()
     with pytest.raises(sqlite3.ProgrammingError):
