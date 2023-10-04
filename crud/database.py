@@ -121,10 +121,10 @@ class Database:
 
     def mostrar_registro(self, id:int) -> tuple:
         """
-        Recupera...
+        Busca um registro no banco de dados apartir do ID informado
 
         Returns:
-            list:.
+            list: tupla de valores
         """
         try:
             self.cursor.execute("""SELECT * FROM Funcionarios WHERE id = ?""", (id))
@@ -132,6 +132,11 @@ class Database:
 
         except sqlite3.Error as e:
             print(f"Erro ao acessar a base de dados: {e}")
+
+    # TODO: Função para deletar o registro informado.
+    def deleta_valor(self, id: int) -> bool:
+        pass
+
 
     def fechar_conexao(self):
         """

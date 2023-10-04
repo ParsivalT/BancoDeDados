@@ -1,7 +1,7 @@
 # test_database.py
 import sqlite3
 import pytest
-from package.database import Database
+from crud.database import Database
 
 # Fixture para criar uma instância do banco de dados em memória
 @pytest.fixture

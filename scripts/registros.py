@@ -1,7 +1,21 @@
 import sqlite3
+import os
 
-conn = sqlite3.connect("Empresa.db")
-cursor = conn.cursor()
+# TODO: ARRUMAR A INSERÇAO DE VALORES
+
+    # Insira os registros de funcionários
+    for _ in range(1000):
+        cursor.execute("""
+            INSERT INTO funcionarios (nome, dataNascimento, cargo)
+            VALUES (?, ?, ?)
+        """, ('João Silva', '15-04-1985', 'Gerente de Vendas'))
+
+    # Commit e feche a conexão
+    conn.commit()
+    conn.close()
+
+print("Banco de dados criado e registros inseridos.")
+
 
 for _ in range(1000):
     cursor.execute("""INSERT INTO funcionarios (nome, dataNascimento, cargo)
