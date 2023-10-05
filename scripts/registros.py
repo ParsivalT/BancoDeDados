@@ -1,21 +1,19 @@
 import sqlite3
 import os
 
-# TODO: ARRUMAR A INSERÇAO DE VALORES
+# Crie ou conecte ao banco de dados
+conn = sqlite3.connect('../database/Empresa.db')
+cursor = conn.cursor()
 
-    # Insira os registros de funcionários
-    for _ in range(1000):
-        cursor.execute("""
-            INSERT INTO funcionarios (nome, dataNascimento, cargo)
-            VALUES (?, ?, ?)
-        """, ('João Silva', '15-04-1985', 'Gerente de Vendas'))
-
-    # Commit e feche a conexão
-    conn.commit()
-    conn.close()
-
-print("Banco de dados criado e registros inseridos.")
-
+# Crie a tabela de funcionários (caso ela não exista)
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS funcionarios (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT,
+        dataNascimento TEXT,
+        cargo TEXT
+    )
+''')
 
 for _ in range(1000):
     cursor.execute("""INSERT INTO funcionarios (nome, dataNascimento, cargo)
