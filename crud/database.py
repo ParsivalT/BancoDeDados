@@ -9,17 +9,21 @@ class Database:
         Parameters:
             dbpath (str): O caminho para o arquivo do banco de dados SQLite.
         """
-        self.online = False
+        self._online = False
 
         try:
             # Tenta estabelecer uma conexão com o banco de dados SQLite usando o caminho fornecido.
             self.conn = sqlite3.connect(dbpath)
             self.cursor = self.conn.cursor()
-            self.online = True
+            self._online = True
 
         except sqlite3.Error as e:
             # Se ocorrer um erro durante a conexão, imprime uma mensagem de erro.
             print(f"Não foi possível se conectar ao banco: {e}")
+
+    @property
+    def online(self) -> bool: 
+        return self._online
 
     def criar_tabela(self):
         """
