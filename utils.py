@@ -57,7 +57,11 @@ class Sistema(Database):
         # id = PROMPT.ask(prompt='Insira o [b]id[/b] que deseja consultar')
         resultado = self.mostrar_registro(id=id)
 
-        CONS.print(resultado)
+        if resultado is not None:
+            CONS.prin(resultado)
+
+        else: 
+            CONS.print("[red i] Houve um problema, tente novamente...")
 
     def get_input(self):
         try: 
