@@ -11,6 +11,7 @@ def main():
     # Inciando a conexão com o banco.
     aniLoad(value="Conectando-se ao Banco de dados", time=2)
     SISTEMA.conectar(dbpath='./database/Empresa.db')
+    SISTEMA.criar_tabela()
     SISTEMA.menu()
     
 if __name__ == '__main__':

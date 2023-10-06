@@ -51,8 +51,15 @@ class Sistema(Database):
         sleep(1)
 
 
-    def get_input(self):
+    def consultar(self) -> None:
+        id: int = 0
+        id = int(input(">> "))
+        # id = PROMPT.ask(prompt='Insira o [b]id[/b] que deseja consultar')
+        resultado = self.mostrar_registro(id=id)
 
+        CONS.print(resultado)
+
+    def get_input(self):
         try: 
             if super().online != False:
                 opc = PROMPT.ask("\n>>", default='1').lower()
@@ -60,7 +67,7 @@ class Sistema(Database):
                 match opc:
                     # Buscar
                     case '1': 
-                        pass
+                        self.consultar()
 
                     # Cadastrar
                     case '2':

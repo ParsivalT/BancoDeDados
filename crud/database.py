@@ -32,11 +32,12 @@ class Database:
         try:
             self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS Funcionarios (
-                    id INTEGER PRIMARY KEY,
-                    nome TEXT NOT NULL,
-                    dataNascimento DATE NOT NULL,
-                    cargo TEXT NOT NULL
-                )''')
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nome TEXT,
+                    dataNascimento TEXT,
+                    cargo TEXT
+                )
+            ''')
             self.conn.commit()
             print("Tabela 'Funcionarios' criada com sucesso.")
 
@@ -123,7 +124,17 @@ class Database:
         except sqlite3.Error as e:
             print(f"Houve um problema ao tentar atualizar o valor: {e}")
 
-    def mostrar_registro(self, id:int) -> tuple:
+    # TODO: Verificar bugs
+    def mostrar_registro(self, id: int) -> tuple:
+        try:
+            self.cursor.execute("""SELECT * FROM Funcionarios WHERE id = ?""", (id,))
+            return self.cursor.fetchone()  # Retorna uma única tupla de valores
+
+        except sqlite3.Error as e:
+            raise ValueError(f"Erro ao acessar a base de dados: {e}")
+
+    '''
+   def mostrar_registro(self, id:int) -> tuple:
         """
         Busca um registro no banco de dados apartir do ID informado
 
@@ -132,10 +143,11 @@ class Database:
         """
         try:
             self.cursor.execute("""SELECT * FROM Funcionarios WHERE id = ?""", (id))
-            return self.cursor.fetchall()
+            return self.cursor.fetchone()
 
         except sqlite3.Error as e:
             print(f"Erro ao acessar a base de dados: {e}")
+    ''' 
 
     # TODO: Função para deletar o registro informado.
     def deleta_valor(self, id: int) -> bool:

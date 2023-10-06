@@ -2,12 +2,12 @@ import sqlite3
 import os
 
 # Crie ou conecte ao banco de dados
-conn = sqlite3.connect('../database/Empresa.db')
+conn = sqlite3.connect('/workspace/BancoDeDados/database/Empresa.db')
 cursor = conn.cursor()
 
 # Crie a tabela de funcionários (caso ela não exista)
 cursor.execute('''
-    CREATE TABLE IF NOT EXISTS funcionarios (
+    CREATE TABLE IF NOT EXISTS Funcionarios (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT,
         dataNascimento TEXT,
@@ -85,6 +85,7 @@ for _ in range(1000):
         ('Vanessa Oliveira', '25-01-1981', 'Analista de Recursos Humanos'),
         ('Luiz Costa', '10-07-1979', 'Desenvolvedor')
     """)
-conn.commit()
+    conn.commit()
+    
 conn.close()
 
