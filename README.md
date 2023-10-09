@@ -2,6 +2,8 @@
 
 Este projeto é um exemplo simples de um aplicativo CRUD (Create, Read, Update, Delete) desenvolvido em Python. Foi criado com o objetivo de aprimorar as habilidades de programação em Python e demonstra como usar o SQLite3 como banco de dados e a biblioteca RICH para a interface visual.
 
+![image](https://github.com/ParsivalT/BancoDeDados/assets/100098157/9089c442-7c57-423d-8466-7a670e3fce2c)
+
 
 ## Funcionalidades
 
