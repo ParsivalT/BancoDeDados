@@ -1,8 +1,11 @@
 import sqlite3
 import os
 
+PATH = os.path.abspath('data/')
+PATH_DB = os.path.join(PATH, 'Empresa.db')
+
 # Crie ou conecte ao banco de dados
-conn = sqlite3.connect('/workspace/BancoDeDados/database/Empresa.db')
+conn = sqlite3.connect(PATH_DB)
 cursor = conn.cursor()
 
 # Crie a tabela de funcionários (caso ela não exista)
