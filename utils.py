@@ -58,7 +58,7 @@ class Sistema(Database):
         resultado = self.mostrar_registro(id=id)
 
         if resultado is not None:
-            CONS.prin(resultado)
+            CONS.print(resultado)
 
         else: 
             CONS.print("[red i] Houve um problema, tente novamente...")
