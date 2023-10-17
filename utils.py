@@ -63,6 +63,17 @@ class Sistema(Database):
         else: 
             CONS.print("[red i] Houve um problema, tente novamente...")
 
+    # TODO: Finalizar o cadastro de usuarios.
+    def cadastrar(self) -> None:
+
+        nome = PROMPT.ask("Nome: ")
+        data = PROMPT.ask("Data: ")
+        cargo = PROMPT.ask("Cargo: ")
+
+        self.inserir_valor(nome=nome, data=data, cargo=cargo)
+        print("Funcionario cadastrado com sucesso.")
+
+
     def get_input(self):
         try: 
             if super().online != False:
@@ -75,7 +86,7 @@ class Sistema(Database):
 
                     # Cadastrar
                     case '2':
-                        pass
+                        self.cadastrar()
 
                     # Atualizar
                     case '3':
