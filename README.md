@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Banco de Dados
 
 Descrição do Repositório:
@@ -5,3 +6,6 @@ Este repositório é dedicado ao armazenamento e compartilhamento dos meus códi
 a bancos de dados. Aqui você encontrará exemplos, scripts, e todo o trabalho prático que estou realizando para aprimorar
 meu conhecimento em gerenciamento de dados e sistemas de banco de dados. Sinta-se à vontade para explorar, colaborar e aprender
 junto comigo neste percurso de aprendizado.
+=======
+## Banco de Dados
+>>>>>>> f108712 (Criando o readme)
