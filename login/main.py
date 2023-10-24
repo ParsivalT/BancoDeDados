@@ -63,24 +63,8 @@ def verifica_usuario(usuario, senha):
 
 # Definindo uma função para o menu principal.
 def menu():
-    opc:str = ''
-    while True:
-        system("clear || cls")  # Limpa a tela do terminal.
-        print("Insira seu usuário e sua senha")
-        user:str = input("Usuário: ")
-        senha:str = getpass.getpass("Senha: ")  # Solicita a senha de forma segura.
-
-        if verifica_usuario(user, senha):
-            system("clear || cls")  # Limpa a tela novamente.
-            print("Usuário válido!")
-
-            input("\n\nDigite ENTER para continuar")
-
-        else:
-            system("clear || cls")  # Limpa a tela em caso de usuário inválido.
-            print("Usuário inválido")
-
-            input("\n\nDigite ENTER para continuar")
+    # TODO: Criar o menu.
+    ...
 
 if __name__ == "__main__":
     menu()  # Inicia o menu quando o programa é executado diretamente.
